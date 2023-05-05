@@ -1,7 +1,24 @@
 <h2>All tasks</h2>
 
-<ol>
+<%= link_to "All", root_path %>
+
+<form action="tasks/create" method="post">
+  <div>
+    <label for="description">Description: </label>
+    <input type="text" name="task[description]" id="description" required>
+  </div>
+  <div>
+    <input type="submit" value="Add">
+  </div>
+</form>
+
+<ul>
   <% @tasks.each do |task| %>
-    <li><%= task.completed %> <%= task.description %></li>
+    <li>
+      <%= link_to toggle_completed_path(task), data: { turbo_method: :patch } do %>
+        <span><%= task.completed ? 'X' : 'O' %></span>
+      <% end %>
+      <%= task.completed %> <%= task.description %>
+    </li>
   <% end %>
-</ol>
+</ul>
